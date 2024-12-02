@@ -42,11 +42,14 @@ class _LoginPageState extends State<LoginPage> {
             .get();
 
         if (sellerSnapshot.docs.isNotEmpty) {
+          // Ambil ID dokumen penjual yang ditemukan
+          String sellerId = sellerSnapshot.docs.first.id;
+        
           // Simpan username penjual ke shared_preferences
           final prefs = await SharedPreferences.getInstance();
           await prefs.setString('username', username);
 
-          Navigator.pushReplacementNamed(context, '/sellerMainMenu');
+          Navigator.pushReplacementNamed(context, '/sellerMainMenu', arguments: sellerId);
         } else {
           _showErrorDialog('Incorrect username or password');
         }

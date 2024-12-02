@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'features/screens/main_users/main_menu.dart';
-import 'features/screens/main_seller/seller_menu.dart'; // Halaman menu untuk seller
+import 'features/screens/users/main_users/main_menu.dart';
+import 'features/screens/seller/main_seller/seller_menu.dart'; // Halaman menu untuk seller
 import 'features/screens/login/login_page.dart'; // Halaman login
 
 // void main() async {
@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => LoginPage(),
         '/userMainMenu': (context) => MainMenuPage(),
-        '/sellerMainMenu': (context) => SellerMainMenuPage(),
+        '/sellerMainMenu': (context) => SellerMenuPage(),
       },
     );
   }

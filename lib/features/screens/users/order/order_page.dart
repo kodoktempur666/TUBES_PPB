@@ -1,12 +1,14 @@
+// order_screen.dart
 import 'package:flutter/material.dart';
-import '../../../widgets/history_card.dart'; // Import the HistoryCard widget
+import 'package:tubes/features/screens/users/order/order_history_page.dart';
+import '../../../../widgets_user/order_card.dart';  
 
-class OrderHistoryScreen extends StatefulWidget {
+class OrderScreen extends StatefulWidget {
   @override
-  _OrderHistoryScreenState createState() => _OrderHistoryScreenState();
+  _OrderScreenState createState() => _OrderScreenState();
 }
 
-class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
+class _OrderScreenState extends State<OrderScreen> {
   OverlayEntry? _overlayEntry;
 
   // Data pesanan
@@ -15,27 +17,14 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
       'id_pesanan': 'ORDER101',
       'date': 'Oct 24, 2024',
       'pickupTime': '9.40 pm',
-      'status': 'COMPLETED',
-      'statusColor': Colors.green,
+      'status': 'ESTIMATED PICK UP',
+      'statusColor': Colors.redAccent,
       'items': [
         {'name': 'Classic Style Noodle', 'quantity': 1},
         {'name': 'Classic Style Fried Rice', 'quantity': 1},
       ],
       'seller': 'Warung mie bang ucok',
       'total': 'Rp 60.000',
-    },
-    {
-      'id_pesanan': 'ORDER102',
-      'date': 'Oct 26, 2024',
-      'pickupTime': '10.00 pm',
-      'status': 'DECLINED',
-      'statusColor': Colors.redAccent,
-      'items': [
-        {'name': 'Sate Padang', 'quantity': 1},
-        {'name': 'Sate Madura', 'quantity': 1},
-      ],
-      'seller': 'Warung Sate',
-      'total': 'Rp 30.000',
     },
   ];
 
@@ -97,26 +86,32 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () {
-            _removeOverlay();
-            Navigator.pop(context); // Kembali ke halaman sebelumnya
-          },
-        ),
         title: Text(
-          'Order History',
+          'Order',
           style: TextStyle(color: Colors.black),
         ),
         centerTitle: true,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.history, color: Colors.black),
+            onPressed: () {
+              _removeOverlay(); // Menutup overlay terlebih dahulu
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => OrderHistoryScreen()), // Navigasi ke halaman baru
+              );
+            },
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: ListView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            ...orders.map((order) => HistoryCard(
+            ...orders.map((order) => OrderCard(
                   order: order,
-                  onToggleDetails: () {
+                  onDetailPressed: () {
                     _overlayEntry == null
                         ? _showOverlay(context, order['items'])
                         : _removeOverlay();

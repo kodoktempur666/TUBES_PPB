@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart'; // Import shared_preferences
-import '../../../widgets/user_profile.dart'; // Import ProfileWidget yang sudah dibuat sebelumnya
+import '../../../../widgets_user/user_profile.dart'; // Import ProfileWidget yang sudah dibuat sebelumnya
 
 class ProfilePage extends StatefulWidget {
   @override
