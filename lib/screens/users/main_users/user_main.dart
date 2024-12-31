@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:tubes/screens/users/food_screen/food.dart';
+import 'package:tubes/screens/users/food/beverage.dart';
+import 'package:tubes/screens/users/food/food.dart';
 import '../../../widgets/user/category_item.dart';
-import '../food_screen/preference_page.dart';
 import '../order/order_page.dart';
 import '../profile/user_profile.dart';
 import '../../../widgets/user/custom_bottom_navbar.dart';
-import '../../../controllers/user_controller.dart';
+import '../../../controllers/users/user_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart'; // Import shared_preferences
 
 class MainMenuPage extends StatefulWidget {
@@ -19,7 +19,7 @@ class _MainMenuPageState extends State<MainMenuPage> {
   List<Widget> _pages = <Widget>[
     MainMenuScreen(),
     OrderScreen(),
-    ProfilePage(), 
+    ProfilePage(),
   ];
 
   void _onItemTapped(int index) {
@@ -31,7 +31,7 @@ class _MainMenuPageState extends State<MainMenuPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _pages[_selectedIndex], 
+      body: _pages[_selectedIndex],
       bottomNavigationBar: CustomBottomNavBar(
         selectedIndex: _selectedIndex,
         onItemTapped: _onItemTapped,
@@ -46,10 +46,10 @@ class MainMenuScreen extends StatefulWidget {
 }
 
 class _MainMenuScreenState extends State<MainMenuScreen> {
- String? _username;
+  String? _username;
   Map<String, dynamic>? _userData;
 
-  final UserController _userController = UserController(); 
+  final UserController _userController = UserController();
 
   @override
   void initState() {
@@ -92,9 +92,7 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
   @override
   Widget build(BuildContext context) {
     return _userData == null
-        ? Center(
-            child:
-                CircularProgressIndicator()) 
+        ? Center(child: CircularProgressIndicator())
         : SingleChildScrollView(
             child: Column(
               children: [
@@ -109,7 +107,7 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Hi, ${_userData?['nama'] ?? 'Guest'}\nWelcome to our store!', 
+                            'Hi, ${_userData?['nama'] ?? 'Guest'}\nWelcome to our store!',
                             style: TextStyle(color: Colors.white, fontSize: 16),
                           ),
                           Column(
@@ -127,20 +125,6 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                       SizedBox(height: 16.0),
 
                       // Search Bar
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: TextField(
-                          decoration: InputDecoration(
-                            hintText: 'Search',
-                            filled: true,
-                            fillColor: Colors.white,
-                            prefixIcon: Icon(Icons.search),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                          ),
-                        ),
-                      ),
 
                       // Categories
                       Row(
@@ -161,7 +145,11 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                             icon: Icons.liquor,
                             label: 'Beverage',
                             onTap: () {
-                              print('Pizza clicked');
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => BeverageScreen()),
+                              );
                             },
                           ),
                         ],

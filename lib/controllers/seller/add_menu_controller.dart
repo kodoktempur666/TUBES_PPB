@@ -8,6 +8,7 @@ class AddMenuController {
     required int harga,
     required String deskripsi,
     required String kategori,
+    required int cookingTime,
     required int stok,
     required String seller,
   }) async {
@@ -16,6 +17,7 @@ class AddMenuController {
       'harga': harga,
       'deskripsi': deskripsi,
       'kategori': kategori,
+      'cookingTime': cookingTime,
       'stok': stok,
       'seller': seller,
     });

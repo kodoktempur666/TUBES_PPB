@@ -7,7 +7,7 @@ class ProfileWidget extends StatelessWidget {
   final String? password;
   final double? saldo;
 
-  // Konstruktor untuk menerima data profil
+  // Constructor to receive profile data
   ProfileWidget({
     required this.nama,
     required this.username,
@@ -18,35 +18,63 @@ class ProfileWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _buildProfileField('Nama', nama),
-        _buildProfileField('Username', username),
-        _buildProfileField('Kontak', kontak),
-        _buildProfileField('Password', password),
-        _buildProfileField('Saldo', 'Rp ${saldo?.toStringAsFixed(0)}'),
-      ],
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildProfileField('Nama', nama),
+          _buildProfileField('Username', username),
+          _buildProfileField('Kontak', kontak),
+          _buildProfileField('Password', password),
+          _buildProfileField('Saldo', 'Rp ${saldo?.toStringAsFixed(0)}'),
+        ],
+      ),
     );
   }
 
-  // Widget untuk menampilkan label dan data profil
+  // Widget to display label and profile data with custom style
   Widget _buildProfileField(String label, String? value) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Row(
-        children: [
-          Text(
-            '$label: ',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          ),
-          Expanded(
-            child: Text(
-              value ?? 'Loading...',
-              style: TextStyle(fontSize: 16),
+      padding: const EdgeInsets.symmetric(vertical: 12.0),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(8),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
+              spreadRadius: 2,
+              blurRadius: 8,
             ),
+          ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            children: [
+              Text(
+                '$label: ',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                  color: Colors.blueGrey,
+                ),
+              ),
+              SizedBox(width: 10), // Add spacing between label and value
+              Expanded(
+                child: Text(
+                  value ?? 'Loading...',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.black87,
+                  ),
+                  overflow: TextOverflow.ellipsis, // Handle long text gracefully
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

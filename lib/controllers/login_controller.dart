@@ -14,6 +14,7 @@ class AuthController {
         final prefs = await SharedPreferences.getInstance();
         await prefs.setString('username', username);
 
+        
         return '/userMainMenu:${userSnapshot.docs.first.id}';
       } else {
         QuerySnapshot sellerSnapshot = await FirebaseFirestore.instance
@@ -24,6 +25,7 @@ class AuthController {
 
         if (sellerSnapshot.docs.isNotEmpty) {
           final prefs = await SharedPreferences.getInstance();
+
           await prefs.setString('username', username);
 
           return '/sellerMainMenu:${sellerSnapshot.docs.first.id}';

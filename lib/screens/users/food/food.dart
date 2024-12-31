@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import '../../../widgets/user/food_card.dart'; 
+import '../../../widgets/user/food_card.dart';
+
 class FoodScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,6 @@ class FoodScreen extends StatelessWidget {
           stream: FirebaseFirestore.instance
               .collection('foods')
               .where('kategori', isEqualTo: 'food')
-              // .where('stok', isGreaterThan: 0) 
               .snapshots(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
@@ -36,7 +36,9 @@ class FoodScreen extends StatelessWidget {
                 return FoodCard(
                   name: food['nama_makanan'],
                   price: food['harga'],
-                  vendor: food['seller'],
+                  seller: food['seller'],
+                  description: food['deskripsi'],
+                  cookingTime: food['cookingTime'],
                   stock: food['stok'],
                 );
               },

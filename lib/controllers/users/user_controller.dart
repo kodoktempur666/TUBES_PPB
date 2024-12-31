@@ -18,4 +18,6 @@ class UserController {
       throw Exception('Error fetching user data: $e');
     }
   }
+
+  
 }

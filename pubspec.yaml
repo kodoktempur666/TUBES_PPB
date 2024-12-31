@@ -38,6 +38,7 @@ dependencies:
   firebase_core: ^3.8.0    # Untuk menghubungkan aplikasi ke Firebase
   cloud_firestore: ^5.5.0
   shared_preferences: ^2.3.3
+  intl: ^0.20.1
 
 
 dev_dependencies:

@@ -1,44 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../../controllers/seller/seller_controller.dart'; // Pastikan Anda punya controller ini untuk mengambil data seller
-import '../../../widgets/seller/food_order_card.dart'; // Mengimpor FoodOrderCard dari folder widget
-import '../../seller/order/food_order_history.dart';
+import '../../../controllers/seller/seller_controller.dart';
+import '../../../widgets/seller/history_list_card.dart'; // Pastikan Anda memiliki widget ini
 
-class FoodOrder extends StatelessWidget {
-  const FoodOrder({super.key});
+class FoodOrderHistory extends StatelessWidget {
+  const FoodOrderHistory({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Active Order'),
+        title: const Text('Order History'),
         centerTitle: true,
-        actions: [
-          IconButton(
-            icon: Icon(Icons.history, color: Colors.black),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        FoodOrderHistory()), // Navigasi ke halaman baru
-              );
-            },
-          ),
-        ],
       ),
-      body: FoodOrderList(),
+      body: FoodOrderHistoryList(),
     );
   }
 }
 
-class FoodOrderList extends StatefulWidget {
+class FoodOrderHistoryList extends StatefulWidget {
   @override
-  _FoodOrderListState createState() => _FoodOrderListState();
+  _FoodOrderHistoryState createState() => _FoodOrderHistoryState();
 }
 
-class _FoodOrderListState extends State<FoodOrderList> {
+class _FoodOrderHistoryState extends State<FoodOrderHistoryList> {
   String? _username;
   Map<String, dynamic>? _userData;
   final SellerController _sellerController = SellerController();
@@ -85,7 +71,7 @@ class _FoodOrderListState extends State<FoodOrderList> {
 
   @override
   Widget build(BuildContext context) {
-    // Jika _sellerName belum terisi, tampilkan loading spinner
+    // Jika _userData belum terisi, tampilkan loading spinner
     if (_userData == null) {
       return Center(child: CircularProgressIndicator());
     }
@@ -93,8 +79,8 @@ class _FoodOrderListState extends State<FoodOrderList> {
     return StreamBuilder<QuerySnapshot>(
       stream: _firestore
           .collection('order')
-          .where('status', isEqualTo: 'accepted')
           .where('seller', isEqualTo: _userData?['nama'])
+          .where('status', whereIn: ['done', 'declined']) // Query untuk status 'done' dan 'accepted'
           .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -119,29 +105,17 @@ class _FoodOrderListState extends State<FoodOrderList> {
             final orderDate = data['date'] as String;
             final totalAmount = (data['total'] as num).toDouble();
 
-            return FoodOrderCard(
-              orderId: order.id,
+            return HistoryOrderCard(
               buyer: data['buyer'] ?? 'Unknown',
               date: orderDate,
-              totalAmount: totalAmount, // Pastikan dikirim dalam bentuk double
-              onPickedUp: () => _markAsPickedUp(order.id),
+              totalAmount: totalAmount,
+              status: data['status'] ?? 'Unknown',
               onDetails: () => _orderDetailsOverlay(data),
             );
           },
         );
       },
     );
-  }
-
-  Future<void> _markAsPickedUp(String orderId) async {
-    try {
-      await _firestore.collection('order').doc(orderId).update({
-        'status': 'done',
-      });
-      print('Order marked as picked up');
-    } catch (e) {
-      print('Failed to update order status: $e');
-    }
   }
 
   void _orderDetailsOverlay(Map<String, dynamic> orderData) {

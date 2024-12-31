@@ -1,129 +1,150 @@
 import 'package:flutter/material.dart';
-import '../../../widgets/user/history_card.dart'; 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../../controllers/users/user_controller.dart';
+import '../../../widgets/user/history_order_card.dart'; // Pastikan Anda memiliki widget ini
 
-class OrderHistoryScreen extends StatefulWidget {
-  @override
-  _OrderHistoryScreenState createState() => _OrderHistoryScreenState();
-}
-
-class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
-  OverlayEntry? _overlayEntry;
-
-  // Data pesanan
-  final List<Map<String, dynamic>> orders = [
-    {
-      'id_pesanan': 'ORDER101',
-      'date': 'Oct 24, 2024',
-      'pickupTime': '9.40 pm',
-      'status': 'COMPLETED',
-      'statusColor': Colors.green,
-      'items': [
-        {'name': 'Classic Style Noodle', 'quantity': 1},
-        {'name': 'Classic Style Fried Rice', 'quantity': 1},
-      ],
-      'seller': 'Warung mie bang ucok',
-      'total': 'Rp 60.000',
-    },
-    {
-      'id_pesanan': 'ORDER102',
-      'date': 'Oct 26, 2024',
-      'pickupTime': '10.00 pm',
-      'status': 'DECLINED',
-      'statusColor': Colors.redAccent,
-      'items': [
-        {'name': 'Sate Padang', 'quantity': 1},
-        {'name': 'Sate Madura', 'quantity': 1},
-      ],
-      'seller': 'Warung Sate',
-      'total': 'Rp 30.000',
-    },
-  ];
-
-  void _showOverlay(BuildContext context, List<Map<String, dynamic>> items) {
-    final overlay = Overlay.of(context);
-
-    _overlayEntry = OverlayEntry(
-      builder: (context) => Positioned(
-        bottom: 100,
-        left: MediaQuery.of(context).size.width * 0.1,
-        width: MediaQuery.of(context).size.width * 0.8,
-        child: Material(
-          elevation: 5,
-          borderRadius: BorderRadius.circular(12),
-          color: Colors.white,
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  'Order Detail',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                ),
-                SizedBox(height: 10),
-                ...items.map((item) => Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 4.0),
-                      child: Text(
-                        '${item['name']}       x ${item['quantity']}',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 14),
-                      ),
-                    )),
-                SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
-                    _removeOverlay();
-                  },
-                  child: Text('Close'),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-
-    overlay?.insert(_overlayEntry!);
-  }
-
-  void _removeOverlay() {
-    _overlayEntry?.remove();
-    _overlayEntry = null;
-  }
+class OrderHistoryScreen extends StatelessWidget {
+  const OrderHistoryScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () {
-            _removeOverlay();
-            Navigator.pop(context); // Kembali ke halaman sebelumnya
-          },
-        ),
-        title: Text(
-          'Order History',
-          style: TextStyle(color: Colors.black),
-        ),
+        title: const Text('Order History'),
         centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: ListView(
-          children: [
-            ...orders.map((order) => HistoryCard(
-                  order: order,
-                  onToggleDetails: () {
-                    _overlayEntry == null
-                        ? _showOverlay(context, order['items'])
-                        : _removeOverlay();
-                  },
-                )),
-          ],
+      body: OrderHistoryScreenList(),
+    );
+  }
+}
+
+class OrderHistoryScreenList extends StatefulWidget {
+  @override
+  _OrderHistoryScreenState createState() => _OrderHistoryScreenState();
+}
+
+class _OrderHistoryScreenState extends State<OrderHistoryScreenList> {
+  String? _username;
+  Map<String, dynamic>? _userData;
+  final UserController _userController= UserController();
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+  }
+
+  Future<void> _loadUserData() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      _username = prefs.getString('username');
+
+      if (_username != null) {
+        // Ganti dengan method yang sesuai untuk mengambil data seller
+        final data = await _userController.getUserData(_username!);
+        setState(() {
+          _userData = data; // Ganti dengan field yang benar jika perlu
+        });
+      }
+    } catch (e) {
+      _showErrorDialog('Failed to load user data: $e');
+    }
+  }
+
+  void _showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Error'),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // Jika _userData belum terisi, tampilkan loading spinner
+    if (_userData == null) {
+      return Center(child: CircularProgressIndicator());
+    }
+
+    return StreamBuilder<QuerySnapshot>(
+      stream: _firestore
+          .collection('order')
+          .where('buyer', isEqualTo: _userData?['username'])
+          .where('status', whereIn: ['done', 'declined']) // Query untuk status 'done' dan 'accepted'
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        }
+
+        if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        }
+
+        if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+          return Center(child: Text('No accepted orders available.'));
+        }
+
+        final orders = snapshot.data!.docs;
+
+        return ListView.builder(
+          itemCount: orders.length,
+          itemBuilder: (context, index) {
+            final order = orders[index];
+            final data = order.data() as Map<String, dynamic>;
+            final orderDate = data['date'] as String;
+            final totalAmount = (data['total'] as num).toDouble();
+
+            return HistoryOrderCard(
+              seller: data['seller'] ?? 'Unknown',
+              date: orderDate,
+              totalAmount: totalAmount,
+              status: data['status'] ?? 'Unknown',
+              onDetails: () => _orderDetailsOverlay(data),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  void _orderDetailsOverlay(Map<String, dynamic> orderData) {
+    final items = orderData['items'] as List<dynamic>;
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Order Details'),
+        content: Container(
+          height: 250,
+          width: double.maxFinite,
+          child: ListView.builder(
+            itemCount: items.length,
+            itemBuilder: (context, index) {
+              final item = items[index];
+              return ListTile(
+                title: Text(item['nama_makanan']),
+                subtitle: Text('Quantity: ${item['quantity']}'),
+              );
+            },
+          ),
         ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Close'),
+          ),
+        ],
       ),
     );
   }

@@ -6,6 +6,7 @@ class AddMenuForm extends StatefulWidget {
     required int harga,
     required String deskripsi,
     required String kategori,
+    required int cookingTime,
     required int stok,
   }) onSubmit;
 
@@ -21,6 +22,7 @@ class _AddMenuFormState extends State<AddMenuForm> {
   final TextEditingController _hargaController = TextEditingController();
   final TextEditingController _deskripsiController = TextEditingController();
   final TextEditingController _stokController = TextEditingController();
+  final TextEditingController _cookingTimeController = TextEditingController();
   String _kategori = 'food'; 
 
   void _submitForm() {
@@ -30,6 +32,7 @@ class _AddMenuFormState extends State<AddMenuForm> {
         harga: int.parse(_hargaController.text),
         deskripsi: _deskripsiController.text,
         kategori: _kategori,
+        cookingTime: _cookingTimeController.text.isEmpty ? 0 : int.parse(_cookingTimeController.text),
         stok: int.parse(_stokController.text),
       );
 
@@ -51,7 +54,7 @@ class _AddMenuFormState extends State<AddMenuForm> {
           children: [
             TextFormField(
               controller: _namaController,
-              decoration: InputDecoration(labelText: 'Nama Makanan'),
+              decoration: InputDecoration(labelText: 'Menu Name'),
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Nama makanan tidak boleh kosong';
@@ -62,7 +65,7 @@ class _AddMenuFormState extends State<AddMenuForm> {
             TextFormField(
               controller: _hargaController,
               keyboardType: TextInputType.number,
-              decoration: InputDecoration(labelText: 'Harga'),
+              decoration: InputDecoration(labelText: 'Price'),
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Harga tidak boleh kosong';
@@ -75,10 +78,21 @@ class _AddMenuFormState extends State<AddMenuForm> {
             ),
             TextFormField(
               controller: _deskripsiController,
-              decoration: InputDecoration(labelText: 'Deskripsi'),
+              decoration: InputDecoration(labelText: 'Description'),
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Deskripsi tidak boleh kosong';
+                }
+                return null;
+              },
+            ),
+            TextFormField(
+              controller: _cookingTimeController,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(labelText: 'Cooking Time (minutes)'),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Cooking Time tidak boleh kosong';
                 }
                 return null;
               },
@@ -110,7 +124,7 @@ class _AddMenuFormState extends State<AddMenuForm> {
                   _kategori = value!;
                 });
               },
-              decoration: InputDecoration(labelText: 'Kategori'),
+              decoration: InputDecoration(labelText: 'Category'),
             ),
             SizedBox(height: 20),
             ElevatedButton(

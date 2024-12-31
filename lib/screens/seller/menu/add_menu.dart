@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../../controllers/add_menu_controller.dart';
+import '../../../controllers/seller/add_menu_controller.dart';
 import '../../../widgets/seller/add_menu_form.dart';
-import '../../../controllers/seller_controller.dart';
+import '../../../controllers/seller/seller_controller.dart';
 
 class AddMenu extends StatefulWidget {
   const AddMenu({super.key});
@@ -63,6 +63,7 @@ class _AddMenuState extends State<AddMenu> {
     required int harga,
     required String deskripsi,
     required String kategori,
+    required int cookingTime,
     required int stok,
   }) async {
     if (_seller == null) {
@@ -78,6 +79,7 @@ class _AddMenuState extends State<AddMenu> {
         harga: harga,
         deskripsi: deskripsi,
         kategori: kategori,
+        cookingTime: cookingTime,
         stok: stok,
         seller: _seller!,
       );

@@ -15,7 +15,7 @@ class CustomBottomNavBar extends StatelessWidget {
     return BottomNavigationBar(
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Main Menu'),
-        BottomNavigationBarItem(icon: Icon(Icons.gif_box), label: 'Order'),
+        BottomNavigationBarItem(icon: Icon(Icons.inventory_2), label: 'Order'),
         BottomNavigationBarItem(icon: Icon(Icons.add_box), label: 'Add Menu'),
         BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
       ],
