@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 import '../../controllers/users/order_controller.dart';
 
 class PaymentBody extends StatelessWidget {
@@ -23,6 +24,13 @@ class PaymentBody extends StatelessWidget {
     required this.onAddMenuClicked,
     required this.onProcessPayment,
   }) : super(key: key);
+
+  
+  String formatCurrency(double value) {
+    final formatter =
+        NumberFormat.currency(locale: 'id_ID', symbol: 'Rp', decimalDigits: 0);
+    return formatter.format(value);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,16 +63,21 @@ class PaymentBody extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
             ),
             child: Text(
-              'Rp $balance',
+              formatCurrency(balance),
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
-            ),
+            ),           
+          ),
+          const SizedBox(height: 16),
+          Text(
+            'You are Buying From ${seller}',
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
           ),
           const SizedBox(height: 16),
           const Text(
-            'Item',
+            'Item ',
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
           ),
           const SizedBox(height: 8),
@@ -107,7 +120,7 @@ class PaymentBody extends StatelessWidget {
                     fontSize: 16, fontWeight: FontWeight.bold),
               ),
               Text(
-                'Rp $totalPrice',
+                formatCurrency(totalPrice),
                 style: TextStyle(
                     fontSize: 16, fontWeight: FontWeight.bold),
               ),
@@ -159,7 +172,7 @@ class PaymentBody extends StatelessWidget {
             style: const TextStyle(fontSize: 14),
           ),
           Text(
-            'Price: Rp $price',
+            'Price: ${formatCurrency(price.toDouble())}',
             style: const TextStyle(fontSize: 14),
           )
         ],

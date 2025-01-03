@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class OrderCard extends StatelessWidget {
   final String orderId;
@@ -19,6 +20,12 @@ class OrderCard extends StatelessWidget {
     required this.status,
     required this.onDetails,
   }) : super(key: key);
+
+  String formatCurrency(double value) {
+    final formatter =
+        NumberFormat.currency(locale: 'id_ID', symbol: 'Rp', decimalDigits: 0);
+    return formatter.format(value);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +67,7 @@ class OrderCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text('Rp $totalAmount',
+                Text(formatCurrency(totalAmount),
                     style:
                         TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
                 SizedBox(width: 8),

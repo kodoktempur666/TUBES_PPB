@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ProfileWidget extends StatelessWidget {
   final String? nama;
@@ -16,6 +17,12 @@ class ProfileWidget extends StatelessWidget {
     required this.saldo,
   });
 
+  String formatCurrency(double value) {
+    final formatter =
+        NumberFormat.currency(locale: 'id_ID', symbol: 'Rp', decimalDigits: 0);
+    return formatter.format(value);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -27,7 +34,7 @@ class ProfileWidget extends StatelessWidget {
           _buildProfileField('Username', username),
           _buildProfileField('Kontak', kontak),
           _buildProfileField('Password', password),
-          _buildProfileField('Saldo', 'Rp ${saldo?.toStringAsFixed(0)}'),
+          _buildProfileField('Saldo', formatCurrency(saldo!)),
         ],
       ),
     );
@@ -69,7 +76,8 @@ class ProfileWidget extends StatelessWidget {
                     fontSize: 16,
                     color: Colors.black87,
                   ),
-                  overflow: TextOverflow.ellipsis, // Handle long text gracefully
+                  overflow:
+                      TextOverflow.ellipsis, // Handle long text gracefully
                 ),
               ),
             ],

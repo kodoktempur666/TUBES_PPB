@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:tubes/screens/users/food/beverage.dart';
 import 'package:tubes/screens/users/food/food.dart';
 import '../../../widgets/user/category_item.dart';
@@ -55,6 +56,12 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
   void initState() {
     super.initState();
     _loadUserData();
+  }
+
+  String formatCurrency(double value) {
+    final formatter =
+        NumberFormat.currency(locale: 'id_ID', symbol: 'Rp', decimalDigits: 0);
+    return formatter.format(value);
   }
 
   Future<void> _loadUserData() async {
@@ -115,7 +122,7 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                               Text('Balance',
                                   style: TextStyle(color: Colors.white)),
                               Text(
-                                'Rp ${_userData?['saldo'] ?? 0}',
+                                formatCurrency(_userData?['saldo'] ?? 0),
                                 style: TextStyle(color: Colors.white),
                               ),
                             ],

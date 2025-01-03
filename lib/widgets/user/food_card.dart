@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tubes/screens/users/order/order_payment.dart';
 
@@ -19,6 +20,12 @@ class FoodCard extends StatelessWidget {
     required this.stock,
     required this.description,
   });
+
+  String formatCurrency(double value) {
+    final formatter =
+        NumberFormat.currency(locale: 'id_ID', symbol: 'Rp', decimalDigits: 0);
+    return formatter.format(value);
+  }
 
   Future<void> saveToSharedPreferences(String name, String seller) async {
     final prefs = await SharedPreferences.getInstance();
@@ -85,12 +92,12 @@ class FoodCard extends StatelessWidget {
           children: [
             Text(
               name,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
             SizedBox(height: 8),
             Text(
-              'Price: Rp $price',
-              style: TextStyle(fontSize: 14, color: Colors.grey),
+              formatCurrency(price.toDouble()),
+              style: TextStyle(fontSize: 14, color: Colors.black, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 8),
             Text(
@@ -109,25 +116,32 @@ class FoodCard extends StatelessWidget {
                 style: TextStyle(fontSize: 14, color: Colors.red),
               ),
             SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: stock > 0
-                  ? () async {
-                      await saveToSharedPreferences(name, seller);
-
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => PaymentScreen(),
-                        ),
-                      );
-                    }
-                  : null,
-              child: Text('Buy Now'),
-            ),
-            SizedBox(height: 8),
-            TextButton(
-              onPressed: () => showOverlay(context),
-              child: Text('View Details'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  onPressed: stock > 0
+                      ? () async {
+                          await saveToSharedPreferences(name, seller);
+                
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => PaymentScreen(),
+                            ),
+                          );
+                        }
+                      : null,
+                  style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+                  child: Text('Buy Now', style: TextStyle(color: Colors.white),),
+                ),
+                SizedBox(height: 8),
+                TextButton(
+                  onPressed: () => showOverlay(context),
+                  child: Text('View Details'),
+                 
+                ),
+              ],
             ),
           ],
         ),
@@ -135,4 +149,3 @@ class FoodCard extends StatelessWidget {
     );
   }
 }
-

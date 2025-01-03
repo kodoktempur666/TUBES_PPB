@@ -97,7 +97,7 @@ class _AddMenuState extends State<AddMenu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Add Menu')),
+      appBar: AppBar(title: Text('Add Menu'),),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: AddMenuForm(

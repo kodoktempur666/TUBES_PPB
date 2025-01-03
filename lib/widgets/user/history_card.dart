@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class HistoryCard extends StatelessWidget {
   final Map<String, dynamic> order;
@@ -9,6 +10,12 @@ class HistoryCard extends StatelessWidget {
     required this.order,
     required this.onToggleDetails,
   }) : super(key: key);
+
+  String formatCurrency(double value) {
+    final formatter =
+        NumberFormat.currency(locale: 'id_ID', symbol: 'Rp', decimalDigits: 0);
+    return formatter.format(value);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +72,7 @@ class HistoryCard extends StatelessWidget {
             ),
             SizedBox(height: 16),
             Text(
-              'Total Amount',
+              formatCurrency(order['total']),
               style: TextStyle(fontSize: 14, color: Colors.grey),
             ),
             SizedBox(height: 4),

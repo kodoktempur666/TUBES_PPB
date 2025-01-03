@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tubes/screens/users/food/food.dart';
 import '../../../controllers/users/user_controller.dart';
 import '../../../controllers/users/order_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -22,7 +23,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
   List<Map<String, dynamic>> selectedItems = [];
   Map<String, dynamic>? _userData;
   double totalPrice = 0;
-
 
   @override
   void initState() {
@@ -201,10 +201,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
         content: Text(message),
         actions: [
           TextButton(
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => MainMenuPage()));
-            },
+            onPressed: () => Navigator.pop(context),
             child: Text('OK'),
           ),
         ],
@@ -221,8 +218,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
         actions: [
           TextButton(
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => MainMenuPage()));
+              Navigator.pop(context); // Tutup dialog terlebih dahulu
+              Navigator.pop(context); // Kembali ke halaman sebelumnya
             },
             child: Text('OK'),
           ),

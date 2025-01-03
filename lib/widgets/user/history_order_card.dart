@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import '../../style/color_style.dart';
 
 class HistoryOrderCard extends StatelessWidget {
@@ -14,6 +15,12 @@ class HistoryOrderCard extends StatelessWidget {
       required this.seller,
       required this.date,
       required this.onDetails});
+
+  String formatCurrency(double value) {
+    final formatter =
+        NumberFormat.currency(locale: 'id_ID', symbol: 'Rp', decimalDigits: 0);
+    return formatter.format(value);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +43,7 @@ class HistoryOrderCard extends StatelessWidget {
                   fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 8.0),
-            Text('Total Amount: $totalAmount',
+            Text(formatCurrency(totalAmount),
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
             SizedBox(height: 8.0),
             Text(date, style: TextStyle(fontSize: 16, color: Colors.grey)),

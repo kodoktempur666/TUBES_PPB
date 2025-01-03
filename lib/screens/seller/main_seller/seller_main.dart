@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import '../menu/add_menu.dart';
 import '../order/food_order.dart';
 import '../profile/seller_profile.dart';
+import '../menu/edit_menu.dart';
 import '../../../widgets/seller/bottom_navbar.dart';
 import '../../../widgets/seller/order_list_card.dart';
 import '../../../controllers/seller/seller_controller.dart';
@@ -20,7 +22,7 @@ class _SellerMenuPageState extends State<SellerMenuPage> {
   List<Widget> _pages = <Widget>[
     SellerMenuScreen(),
     FoodOrder(),
-    AddMenu(),
+    FoodManagementScreen(),
     SellerProfile(),
   ];
 
@@ -57,6 +59,12 @@ class _SellerMenuScreenState extends State<SellerMenuScreen> {
   void initState() {
     super.initState();
     _loadUserData();
+  }
+
+  String formatCurrency(double value) {
+    final formatter =
+        NumberFormat.currency(locale: 'id_ID', symbol: 'Rp', decimalDigits: 0);
+    return formatter.format(value);
   }
 
   Future<void> _loadUserData() async {
@@ -126,7 +134,7 @@ class _SellerMenuScreenState extends State<SellerMenuScreen> {
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18)),
                               Text(
-                                'Rp ${_userData?['saldo'] ?? 0}',
+                                formatCurrency(_userData?['saldo'] ?? 0),
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 24),
                               ),
@@ -147,7 +155,7 @@ class _SellerMenuScreenState extends State<SellerMenuScreen> {
                           fontSize: 24)),
                 ),
                 Container(
-                  height: 400.0, // Atur tinggi sesuai kebutuhan Anda
+                  height: 700.0, // Atur tinggi sesuai kebutuhan Anda
                   child: StreamBuilder<QuerySnapshot>(
                     stream: _firestore
                         .collection('order')
@@ -177,7 +185,7 @@ class _SellerMenuScreenState extends State<SellerMenuScreen> {
 
                           return OrderCard(
                             status: data['status'] ?? 'Unknown',
-                            totalAmount: 'Rp ${data['total'] ?? '0'}',
+                            totalAmount: data['total'] ?? 0,
                             username: data['buyer'] ?? 'Unknown',
                             date: data['date'] ?? 'Unknown',
                             onAccept: () =>
