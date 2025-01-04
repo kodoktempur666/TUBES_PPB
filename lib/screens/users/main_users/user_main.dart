@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:tubes/controllers/users/bottom_nav_controller.dart';
 import 'package:tubes/screens/users/food/food.dart';
 import '../../../widgets/user/category_item.dart';
 import '../order/order_page.dart';
@@ -14,7 +16,8 @@ class MainMenuPage extends StatefulWidget {
 }
 
 class _MainMenuPageState extends State<MainMenuPage> {
-  int _selectedIndex = 0;
+  // Remove the _selectedIndex, it's now managed by BottomNavController
+  final BottomNavController navController = Get.put(BottomNavController());
 
   List<Widget> _pages = <Widget>[
     MainMenuScreen(),
@@ -22,20 +25,14 @@ class _MainMenuPageState extends State<MainMenuPage> {
     ProfilePage(),
   ];
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _pages[_selectedIndex],
-      bottomNavigationBar: CustomBottomNavBar(
-        selectedIndex: _selectedIndex,
-        onItemTapped: _onItemTapped,
-      ),
+      body: Obx(() {
+        // Use navController.selectedIndex to dynamically switch pages
+        return _pages[navController.selectedIndex.value];
+      }),
+      bottomNavigationBar: CustomBottomNavBar(),
     );
   }
 }
@@ -156,8 +153,8 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                                     hintText: 'Search...',
                                     hintStyle: TextStyle(
                                         color: Colors.grey, fontSize: 16.0),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        vertical: 10.0),
+                                    contentPadding:
+                                        EdgeInsets.symmetric(vertical: 10.0),
                                   ),
                                   style: TextStyle(fontSize: 16.0),
                                 ),
@@ -179,8 +176,7 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                       bottomLeft: Radius.circular(20),
                       bottomRight: Radius.circular(20),
                     ),
-                    color:
-                      Color(0xFF8B4572),
+                    color: Color(0xFF8B4572),
                   ),
                   padding: const EdgeInsets.all(16.0),
                   child: Wrap(
@@ -195,7 +191,8 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => FoodScreen(category: 'food')),
+                                builder: (context) =>
+                                    FoodScreen(category: 'food')),
                           );
                         },
                       ),
@@ -207,7 +204,8 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => FoodScreen(category: 'beverage')),
+                                builder: (context) =>
+                                    FoodScreen(category: 'beverage')),
                           );
                         },
                       ),
@@ -219,7 +217,8 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => FoodScreen(category: 'noodle')),
+                                builder: (context) =>
+                                    FoodScreen(category: 'noodle')),
                           );
                         },
                       ),
@@ -231,7 +230,8 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => FoodScreen(category: 'beef')),
+                                builder: (context) =>
+                                    FoodScreen(category: 'beef')),
                           );
                         },
                       ),

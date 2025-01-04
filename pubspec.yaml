@@ -40,6 +40,7 @@ dependencies:
   shared_preferences: ^2.3.3
   intl: ^0.20.1
   flutter_svg: ^2.0.16
+  get: ^4.6.6
 
 
 dev_dependencies:
@@ -78,9 +79,6 @@ flutter:
     - assets/images/image-placeholder.svg
     - assets/images/banner_content.png
     - assets/images/banner_food_mood.png
-    - assets/icons/nav_profile.svg
-    - assets/icons/nav_order.svg
-    - assets/icons/nav_home.svg
     - assets/icons/cat_food.png
     - assets/icons/cat_beverage.png
     - assets/icons/
@@ -104,6 +102,10 @@ flutter:
     fonts:
       - asset: assets/fonts/Poppins-Regular.ttf
       - asset: assets/fonts/Poppins-Bold.ttf
+      - asset: assets/fonts/Poppins-Bold.ttf
+        weight: 700
+      - asset: assets/fonts/Poppins-Italic.ttf
+        style: italic
 
 
   #         style: italic

@@ -32,6 +32,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
+      theme: ThemeData(
+        fontFamily: 'Poppins', // Set the default font family to Poppins
+      ),
       routes: {
         '/': (context) => LoginPage(),
         '/userMainMenu': (context) => MainMenuPage(),

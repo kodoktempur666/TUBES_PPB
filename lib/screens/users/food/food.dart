@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:tubes/screens/users/food/detail_food.dart';
 import '../../../widgets/user/food_card.dart';
 
 class FoodScreen extends StatelessWidget {
@@ -69,13 +70,24 @@ class FoodScreen extends StatelessWidget {
               itemCount: foodItems.length,
               itemBuilder: (context, index) {
                 var food = foodItems[index].data() as Map<String, dynamic>;
-                return FoodCard(
-                  name: food['nama_makanan'],
-                  price: food['harga'],
-                  seller: food['seller'],
-                  description: food['deskripsi'],
-                  cookingTime: food['cookingTime'],
-                  stock: food['stok'],
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => DetailFoodScreen(
+                        ),
+                      ),
+                    );
+                  },
+                  child: FoodCard(
+                    name: food['nama_makanan'],
+                    price: food['harga'],
+                    seller: food['seller'],
+                    description: food['deskripsi'],
+                    cookingTime: food['cookingTime'],
+                    stock: food['stok'],
+                  ),
                 );
               },
             );

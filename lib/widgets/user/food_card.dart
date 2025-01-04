@@ -53,15 +53,15 @@ class FoodCard extends StatelessWidget {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Food Details'),
+          title: const Text('Food Details'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text('Description: $description'),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Text('Cooking Time: $cookingTime mins'), // Modify if needed
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               if (sellerDetails.isNotEmpty)
                 Text('Seller Address: ${sellerDetails['alamat']}'),
             ],
@@ -71,7 +71,7 @@ class FoodCard extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Close'),
+              child: const Text('Close'),
             ),
           ],
         );
@@ -79,7 +79,7 @@ class FoodCard extends StatelessWidget {
     );
   }
 
- Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
@@ -91,12 +91,12 @@ class FoodCard extends StatelessWidget {
           children: [
             // SVG Placeholder image on the left
             SvgPicture.asset(
-              'assets/images/image-placeholder.svg',  // Path to your SVG file
-              width: 80,  // Set the size of the placeholder image
+              'assets/images/image-placeholder.svg', // Path to your SVG file
+              width: 80, // Set the size of the placeholder image
               height: 80,
               fit: BoxFit.cover,
             ),
-            SizedBox(width: 16),  // Space between image and text
+            const SizedBox(width: 16), // Space between image and text
             // Column for text content
             Expanded(
               child: Column(
@@ -104,30 +104,36 @@ class FoodCard extends StatelessWidget {
                 children: [
                   Text(
                     name,
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 16),
                   ),
-                  SizedBox(height: 3),
+                  const SizedBox(height: 3),
                   Text(
                     formatCurrency(price.toDouble()),
-                    style: TextStyle(fontSize: 12, color: Colors.black, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 12,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 2),
+                  const SizedBox(height: 2),
                   Text(
                     'Seller: $seller',
-                    style: TextStyle(fontSize: 12, color: const Color.fromARGB(255, 24, 24, 24)),
+                    style: const TextStyle(
+                        fontSize: 12, color: Color.fromARGB(255, 24, 24, 24)),
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   Text(
                     'Stock: $stock',
-                    style: TextStyle(fontSize: 12, color: const Color.fromARGB(255, 48, 48, 48)),
+                    style: const TextStyle(
+                        fontSize: 12, color: Color.fromARGB(255, 48, 48, 48)),
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   if (stock == 0)
-                    Text(
+                    const Text(
                       'Sold out',
                       style: TextStyle(fontSize: 14, color: Colors.red),
                     ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -143,13 +149,19 @@ class FoodCard extends StatelessWidget {
                                 );
                               }
                             : null,
-                        style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
-                        child: Text('Buy Now', style: TextStyle(color: Colors.white)),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                        ),
+                        child: const Text('Buy Now',
+                            style: TextStyle(color: Colors.white)),
                       ),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       TextButton(
                         onPressed: () => showOverlay(context),
-                        child: Text('More'),
+                        child: const Text('More'),
                       ),
                     ],
                   ),

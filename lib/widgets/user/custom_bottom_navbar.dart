@@ -1,49 +1,55 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:tubes/controllers/users/bottom_nav_controller.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
-  final int selectedIndex;
-  final ValueChanged<int> onItemTapped;
-
-  const CustomBottomNavBar({
-    Key? key,
-    required this.selectedIndex,
-    required this.onItemTapped,
-  }) : super(key: key);
+  final BottomNavController navController = Get.put(BottomNavController());
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      
-      items: <BottomNavigationBarItem>[
-        BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              'assets/icons/nav_home.svg',
-              semanticsLabel: 'Home',
-              height: 25,
-              width: 25,
+    return Obx(() => BottomNavigationBar(
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset(
+                navController.selectedIndex.value == 0
+                    ? 'assets/icons/nav_home_fill.svg'
+                    : 'assets/icons/nav_home_outline.svg',
+                semanticsLabel: 'Home',
+                height: 25,
+                width: 25,
+              ),
+              label: 'Home',
             ),
-            label: 'Home'),
-        BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              'assets/icons/nav_order.svg',
-              semanticsLabel: 'Order',
-              height: 25,
-              width: 25,
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset(
+                navController.selectedIndex.value == 1
+                    ? 'assets/icons/nav_order_fill.svg'
+                    : 'assets/icons/nav_order_outline.svg',
+                semanticsLabel: 'Order',
+                height: 25,
+                width: 25,
+              ),
+              label: 'Order',
             ),
-            label: 'Order'),
-        BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              'assets/icons/nav_profile.svg',
-              semanticsLabel: 'Profile',
-              height: 25,
-              width: 25,
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset(
+                navController.selectedIndex.value == 2
+                    ? 'assets/icons/nav_profile_fill.svg'
+                    : 'assets/icons/nav_profile_outline.svg',
+                semanticsLabel: 'Profile',
+                height: 25,
+                width: 25,
+              ),
+              label: 'Profile',
             ),
-            label: 'Profile'),
-      ],
-      currentIndex: selectedIndex,
-      selectedItemColor: Colors.black,
-      onTap: onItemTapped,
-    );
+          ],
+          currentIndex: navController.selectedIndex.value,
+          selectedItemColor: Colors.black,
+          unselectedItemColor: Colors.grey,
+          onTap: (index) {
+            navController.changeIndex(index);
+          },
+        ));
   }
 }
