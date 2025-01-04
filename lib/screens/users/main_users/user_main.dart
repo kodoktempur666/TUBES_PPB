@@ -102,6 +102,7 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
         ? Center(child: CircularProgressIndicator())
         : SingleChildScrollView(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Header Container
                 Container(
@@ -132,6 +133,41 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                       SizedBox(height: 16.0),
 
                       // Search Bar
+                      Container(
+                        height: 40.0,
+                        padding: EdgeInsets.symmetric(horizontal: 8.0),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        child: const Row(
+                          children: [
+                            Icon(Icons.search, color: Colors.grey),
+                            SizedBox(width: 8.0),
+                            Expanded(
+                              child: TextField(
+                                decoration: InputDecoration(
+                                  border: InputBorder
+                                      .none, // Removes the default border
+                                  hintText: 'Search...', // Placeholder text
+                                  hintStyle: TextStyle(
+                                    color: Colors
+                                        .grey, // Faded light gray color for hint text
+                                    fontSize: 16.0, // Adjust the size as needed
+                                  ),
+                                  contentPadding: EdgeInsets.symmetric(
+                                      vertical: 10.0), // Vertical alignment
+                                ),
+                                style: TextStyle(
+                                  fontSize: 16.0, // Text size for input
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      SizedBox(height: 16.0),
 
                       // Categories
                       Row(
@@ -160,6 +196,46 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                             },
                           ),
                         ],
+                      ),
+                    ],
+                  ),
+                ),
+
+                // Promotion Banner
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Stack(
+                    children: [
+                      // Background Image
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(
+                            16.0), // Rounded corners for the banner
+                        child: Image.asset(
+                          'assets/images/banner_content.png',
+                          fit: BoxFit
+                              .cover, // Ensures the image scales nicely to the container
+                          width: double
+                              .infinity, // Takes up full width of the parent
+                        ),
+                      ),
+
+                      // Order Now Button
+                      Positioned(
+                        bottom: 16.0,
+                        left: 16.0,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            // Add navigation or functionality here
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.white, // White background
+                            foregroundColor: const Color.fromARGB(255, 0, 0, 0), // Purple text
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(6.0),
+                            ),
+                          ),
+                          child: const Text('Order Now', style: TextStyle(fontSize: 14),),
+                        ),
                       ),
                     ],
                   ),

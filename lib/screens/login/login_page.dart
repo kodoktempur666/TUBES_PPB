@@ -12,8 +12,9 @@ class _LoginPageState extends State<LoginPage> {
   final AuthController _authController = AuthController();
 
   void _login() async {
-    String username = _usernameController.text.trim();
-    String password = _passwordController.text.trim();
+    // For dev only!!
+    String username = "johan123";
+    String password = "123";
 
     try {
       String? route = await _authController.login(username, password);
