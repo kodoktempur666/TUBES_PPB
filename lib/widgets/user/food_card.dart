@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tubes/screens/users/order/order_payment.dart';
@@ -78,8 +79,7 @@ class FoodCard extends StatelessWidget {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
+ Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
@@ -87,61 +87,74 @@ class FoodCard extends StatelessWidget {
       elevation: 3,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Row(
           children: [
-            Text(
-              name,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+            // SVG Placeholder image on the left
+            SvgPicture.asset(
+              'assets/images/image-placeholder.svg',  // Path to your SVG file
+              width: 80,  // Set the size of the placeholder image
+              height: 80,
+              fit: BoxFit.cover,
             ),
-            SizedBox(height: 8),
-            Text(
-              formatCurrency(price.toDouble()),
-              style: TextStyle(fontSize: 14, color: Colors.black, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 8),
-            Text(
-              'Seller: $seller',
-              style: TextStyle(fontSize: 14, color: Colors.black),
-            ),
-            SizedBox(height: 8),
-            Text(
-              'Stock: $stock',
-              style: TextStyle(fontSize: 14, color: Colors.black),
-            ),
-            SizedBox(height: 16),
-            if (stock == 0)
-              Text(
-                'Sold out',
-                style: TextStyle(fontSize: 14, color: Colors.red),
+            SizedBox(width: 16),  // Space between image and text
+            // Column for text content
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    name,
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                  ),
+                  SizedBox(height: 3),
+                  Text(
+                    formatCurrency(price.toDouble()),
+                    style: TextStyle(fontSize: 12, color: Colors.black, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 2),
+                  Text(
+                    'Seller: $seller',
+                    style: TextStyle(fontSize: 12, color: const Color.fromARGB(255, 24, 24, 24)),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    'Stock: $stock',
+                    style: TextStyle(fontSize: 12, color: const Color.fromARGB(255, 48, 48, 48)),
+                  ),
+                  SizedBox(height: 16),
+                  if (stock == 0)
+                    Text(
+                      'Sold out',
+                      style: TextStyle(fontSize: 14, color: Colors.red),
+                    ),
+                  SizedBox(height: 16),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ElevatedButton(
+                        onPressed: stock > 0
+                            ? () async {
+                                await saveToSharedPreferences(name, seller);
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => PaymentScreen(),
+                                  ),
+                                );
+                              }
+                            : null,
+                        style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+                        child: Text('Buy Now', style: TextStyle(color: Colors.white)),
+                      ),
+                      SizedBox(height: 8),
+                      TextButton(
+                        onPressed: () => showOverlay(context),
+                        child: Text('More'),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-            SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ElevatedButton(
-                  onPressed: stock > 0
-                      ? () async {
-                          await saveToSharedPreferences(name, seller);
-                
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => PaymentScreen(),
-                            ),
-                          );
-                        }
-                      : null,
-                  style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
-                  child: Text('Buy Now', style: TextStyle(color: Colors.white),),
-                ),
-                SizedBox(height: 8),
-                TextButton(
-                  onPressed: () => showOverlay(context),
-                  child: Text('View Details'),
-                 
-                ),
-              ],
             ),
           ],
         ),

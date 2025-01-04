@@ -75,11 +75,17 @@ flutter:
   #   - images/a_dot_ham.jpeg
 
   assets:
+    - assets/images/image-placeholder.svg
     - assets/images/banner_content.png
     - assets/images/banner_food_mood.png
     - assets/icons/nav_profile.svg
     - assets/icons/nav_order.svg
     - assets/icons/nav_home.svg
+    - assets/icons/cat_food.png
+    - assets/icons/cat_beverage.png
+    - assets/icons/
+    - assets/images/question.svg
+
     
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -93,11 +99,13 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
+  fonts:
+  - family: Poppins
+    fonts:
+      - asset: assets/fonts/Poppins-Regular.ttf
+      - asset: assets/fonts/Poppins-Bold.ttf
+
+
   #         style: italic
   #   - family: Trajan Pro
   #     fonts:

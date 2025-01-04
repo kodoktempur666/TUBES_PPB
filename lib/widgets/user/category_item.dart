@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CategoryItem extends StatelessWidget {
-  final IconData icon;
+  final Widget icon;
   final String label;
   final VoidCallback onTap; 
 
@@ -16,25 +16,20 @@ class CategoryItem extends StatelessWidget {
         children: [
           // Icon Kategori
           Container(
-            padding: EdgeInsets.all(16.0),
-            decoration: BoxDecoration(
+            padding: const EdgeInsets.all(10.0),
+            decoration: const BoxDecoration(
               shape: BoxShape.circle,
               color: Color(0xFF8B4572), 
             ),
-            child: Icon(
-              icon,
-              size: 32.0,
-              color: Colors.white, 
-            ),
+            child: icon,
           ),
-          SizedBox(height: 8.0),
           // Label Kategori
           Text(
             label,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 14.0,
               fontWeight: FontWeight.w500,
-              color: const Color.fromARGB(255, 255, 255, 255),
+              color: Color.fromARGB(255, 255, 255, 255),
             ),
           ),
         ],
