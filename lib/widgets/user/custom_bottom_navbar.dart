@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
   final int selectedIndex;
@@ -13,10 +14,32 @@ class CustomBottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      items: const <BottomNavigationBarItem>[
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Main Menu'),
-        BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Order'),
-        BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+      
+      items: <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+            icon: SvgPicture.asset(
+              'assets/icons/nav_home.svg',
+              semanticsLabel: 'Home',
+              height: 25,
+              width: 25,
+            ),
+            label: 'Home'),
+        BottomNavigationBarItem(
+            icon: SvgPicture.asset(
+              'assets/icons/nav_order.svg',
+              semanticsLabel: 'Order',
+              height: 25,
+              width: 25,
+            ),
+            label: 'Order'),
+        BottomNavigationBarItem(
+            icon: SvgPicture.asset(
+              'assets/icons/nav_profile.svg',
+              semanticsLabel: 'Profile',
+              height: 25,
+              width: 25,
+            ),
+            label: 'Profile'),
       ],
       currentIndex: selectedIndex,
       selectedItemColor: Colors.black,
