@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:tubes/controllers/users/bottom_nav_controller.dart';
+import 'package:tubes/screens/users/food/all_food.dart';
 import 'package:tubes/screens/users/food/food.dart';
 import '../../../widgets/user/category_item.dart';
 import '../order/order_page.dart';
@@ -257,7 +258,9 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                         bottom: 16.0,
                         left: 16.0,
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Get.to(() => FoodAllScreen());
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.white,
                             foregroundColor: Colors.black,
