@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tubes/screens/users/food/food.dart';
 import '../../../controllers/users/user_controller.dart';
 import '../../../controllers/users/order_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../../widgets/user/order_payment_body.dart';
-import '../main_users/user_main.dart';
 
 class PaymentScreen extends StatefulWidget {
   @override

@@ -16,7 +16,6 @@ class MainMenuPage extends StatefulWidget {
 }
 
 class _MainMenuPageState extends State<MainMenuPage> {
-  // Remove the _selectedIndex, it's now managed by BottomNavController
   final BottomNavController navController = Get.put(BottomNavController());
 
   List<Widget> _pages = <Widget>[
@@ -100,7 +99,7 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
             slivers: [
               // SliverAppBar for sticky header
               SliverAppBar(
-                expandedHeight: 120, // Adjust height of the expanded AppBar
+                expandedHeight: 125, // Adjust height of the expanded AppBar
                 pinned: true, // Keeps the app bar pinned when scrolling
                 backgroundColor: const Color(0xFF8B4572),
                 flexibleSpace: FlexibleSpaceBar(

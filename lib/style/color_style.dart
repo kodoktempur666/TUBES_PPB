@@ -6,4 +6,7 @@ class ColorStyle {
   static const Color button2 = Color(0xFFBABABA);
   static const Color button3 = Color(0xFF961D6A);
   static const Color button4 = Color(0xFF961D1F);
+  static const Color button5 = Color(0xFFFBEAF5);
+  static const Color accent = Color(0xFF6B154C);
+
 }

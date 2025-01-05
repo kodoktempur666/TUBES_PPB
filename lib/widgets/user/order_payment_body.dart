@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import 'package:tubes/style/color_style.dart';
 import '../../controllers/users/order_controller.dart';
 
 class PaymentBody extends StatelessWidget {
@@ -75,7 +76,7 @@ class PaymentBody extends StatelessWidget {
             'You are Buying From ${seller}',
             style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 8),
           const Text(
             'Item ',
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
@@ -99,7 +100,7 @@ class PaymentBody extends StatelessWidget {
           ElevatedButton(
             onPressed: () => onAddMenuClicked(),
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.pink,
+              backgroundColor: ColorStyle.button1,
               minimumSize: const Size(double.infinity, 50),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
@@ -130,7 +131,7 @@ class PaymentBody extends StatelessWidget {
           ElevatedButton(
             onPressed: () => onProcessPayment(),
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.pink,
+              backgroundColor: ColorStyle.button1,
               minimumSize: const Size(double.infinity, 50),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),

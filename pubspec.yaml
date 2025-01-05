@@ -41,6 +41,8 @@ dependencies:
   intl: ^0.20.1
   flutter_svg: ^2.0.16
   get: ^4.6.6
+  cached_network_image: ^3.4.1
+  path_provider: ^2.1.5
 
 
 dev_dependencies:
@@ -106,6 +108,7 @@ flutter:
         weight: 700
       - asset: assets/fonts/Poppins-Italic.ttf
         style: italic
+      - asset: assets/fonts/Poppins-Light.ttf
 
 
   #         style: italic

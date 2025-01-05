@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:tubes/controllers/users/detail_food_controller.dart';
 import 'package:tubes/screens/users/food/detail_food.dart';
 import '../../../widgets/user/food_card.dart';
 
@@ -12,7 +14,8 @@ class FoodScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String title = '${category[0].toUpperCase()}${category.substring(1)} Products';
+    String title =
+        '${category[0].toUpperCase()}${category.substring(1)} Products';
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -70,16 +73,25 @@ class FoodScreen extends StatelessWidget {
               itemCount: foodItems.length,
               itemBuilder: (context, index) {
                 var food = foodItems[index].data() as Map<String, dynamic>;
+
                 return GestureDetector(
+                  // In FoodScreen, before navigating to DetailFoodScreen
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => DetailFoodScreen(
-                        ),
-                      ),
+                    final controller = Get.put(DetailFoodController());
+
+                    controller.setFoodDetails(
+                      food['nama_makanan'],
+                      food['deskripsi'],
+                      food['cookingTime'],
+                      food['harga'].toDouble(),
+                      food['seller'],
+                      food['stok'],
                     );
+                    
+                    // Navigate using Get.to() to make it GetX-friendly
+                    Get.to(() => DetailFoodScreen());
                   },
+
                   child: FoodCard(
                     name: food['nama_makanan'],
                     price: food['harga'],

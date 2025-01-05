@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:intl/intl.dart';
 import 'package:tubes/screens/users/order/order_payment.dart';
 
 class FoodCard extends StatelessWidget {
@@ -21,6 +21,20 @@ class FoodCard extends StatelessWidget {
     required this.stock,
     required this.description,
   });
+
+  String toPascalCaseWithSpaces(String text) {
+    List<String> words = text.split(' '); // Split the string into words
+
+    // Capitalize the first letter of each word and leave spaces
+    for (int i = 0; i < words.length; i++) {
+      words[i] = words[i].substring(0, 1).toUpperCase() +
+          words[i].substring(1).toLowerCase();
+    }
+
+    // Join the words back together with a space in between each word
+    return words.join(' ');
+  }
+
 
   String formatCurrency(double value) {
     final formatter =
@@ -79,8 +93,10 @@ class FoodCard extends StatelessWidget {
     );
   }
 
+  @override
   Widget build(BuildContext context) {
     return Card(
+      color: Colors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
       ),
@@ -103,9 +119,9 @@ class FoodCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    name,
+                    toPascalCaseWithSpaces(name),
                     style: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 16),
+                        fontWeight: FontWeight.bold, fontSize: 16,),
                   ),
                   const SizedBox(height: 3),
                   Text(
