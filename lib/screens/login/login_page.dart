@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tubes/controllers/login_controller.dart'; 
+import 'package:tubes/controllers/login_controller.dart';
+import 'package:tubes/style/color_style.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -34,12 +35,12 @@ class _LoginPageState extends State<LoginPage> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Login Failed'),
+        title: const Text('Login Failed'),
         content: Text(message),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('OK'),
+            child: const Text('OK'),
           ),
         ],
       ),
@@ -49,27 +50,79 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Login')),
+      appBar: AppBar(title: const Text('Login')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextField(
-              controller: _usernameController,
-              decoration: InputDecoration(labelText: 'Username'),
-            ),
-            TextField(
-              controller: _passwordController,
-              decoration: InputDecoration(labelText: 'Password'),
-              obscureText: true,
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _login,
-              child: Text('Login'),
-            ),
-          ],
+        child: Padding(
+          padding:
+              const EdgeInsets.all(16.0), // Padding inside the form container
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextField(
+                controller: _usernameController,
+                decoration: InputDecoration(
+                  labelText: 'Username',
+                  border: OutlineInputBorder(
+                    borderRadius:
+                        BorderRadius.circular(12.0), // Rounded corners
+                    borderSide: const BorderSide(
+                        color: Colors.grey, width: 0.5), // Subtle grey border
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(
+                        12.0), // Keep the corners rounded when focused
+                    borderSide: const BorderSide(
+                        color: ColorStyle.primary,
+                        width: 0.5), // Subtle grey border on focus
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+              TextField(
+                controller: _passwordController,
+                decoration: InputDecoration(
+                  labelText: 'Password',
+                  border: OutlineInputBorder(
+                    borderRadius:
+                        BorderRadius.circular(12.0), // Rounded corners
+                    borderSide: const BorderSide(
+                        color: Color.fromARGB(255, 209, 209, 209),
+                        width: 0.5), // Subtle grey border
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(
+                        12.0), // Keep the corners rounded when focused
+                    borderSide: const BorderSide(
+                        color: ColorStyle.primary,
+                        width: 1.0), // Subtle grey border on focus
+                  ),
+                ),
+                obscureText: true,
+              ),
+
+              const SizedBox(height: 20),
+              // Expanded button with border radius and color
+              SizedBox(
+                width: double.infinity, // Make the button take the full width
+                child: ElevatedButton(
+                  onPressed: _login,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: ColorStyle
+                        .primary, // Use the primary color from ColorStyle
+                    shape: RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.circular(12), // Button border radius
+                    ),
+                  ),
+                  child: const Text(
+                    'Login',
+                    style: TextStyle(fontSize: 16, color: Colors.white),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -84,6 +84,7 @@ flutter:
     - assets/icons/cat_food.png
     - assets/icons/cat_beverage.png
     - assets/icons/
+    - assets/icons/logo@2x.png
     - assets/images/question.svg
 
     

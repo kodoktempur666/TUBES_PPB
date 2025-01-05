@@ -255,27 +255,52 @@ class _PaymentScreenState extends State<PaymentScreen> {
       builder: (context) => AlertDialog(
         title: const Text('Select Food'),
         content: Container(
-          height: 250,
           width: double.maxFinite,
-          child: ListView.builder(
-            itemCount: foodItems.length,
-            itemBuilder: (context, index) {
-              final foodItem = foodItems[index];
-              return ListTile(
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(foodItem['nama_makanan']),
-                    Text('Stock: ${foodItem['stok']}'),
-                  ],
-                ),
-                subtitle: Text('Rp ${foodItem['harga']}'),
-                onTap: () {
-                  _addMenuItem(foodItem);
-                  Navigator.pop(context);
-                },
-              );
-            },
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: foodItems.map((foodItem) {
+                return Container(
+                  margin: const EdgeInsets.symmetric(
+                      vertical: 2.0),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                        color: Colors.grey.shade300), 
+                    borderRadius: BorderRadius.circular(
+                        3.0), 
+                  ),
+                  child: ListTile(
+                    title: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            foodItem['nama_makanan'],
+                            overflow:
+                                TextOverflow.visible, // Prevent text overflow
+                            maxLines: 2,
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        // Stock info
+                        Text(
+                          'Stock: ${foodItem['stok']}',
+                          style: TextStyle(fontSize: 14),
+                        ),
+                      ],
+                    ),
+                    subtitle: Text(
+                      'Rp ${foodItem['harga']}',
+                      style: TextStyle(color: Colors.green),
+                    ),
+                    onTap: () {
+                      _addMenuItem(foodItem);
+                      Navigator.pop(context);
+                    },
+                  ),
+                );
+              }).toList(),
+            ),
           ),
         ),
       ),
