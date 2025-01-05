@@ -90,7 +90,6 @@ class _ProfilePageState extends State<ProfilePage> {
             ProfileWidget(
               nama: _userData?['nama'],
               username: _userData?['username'],
-              kontak: _userData?['kontak'],
               password: _userData?['password'],
               saldo: _userData?['saldo']?.toDouble(),
             ),

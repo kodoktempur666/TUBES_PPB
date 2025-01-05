@@ -142,6 +142,7 @@ class _OrderScreenListState extends State<OrderScreenList> {
     final items = orderData['items'] as List<dynamic>;
     final seller = orderData['seller'];
     String sellerAddress = 'Unknown';
+    String sellerContact = 'Unknown';
 
     try {
       final sellerQuerySnapshot = await FirebaseFirestore.instance
@@ -152,6 +153,7 @@ class _OrderScreenListState extends State<OrderScreenList> {
       if (sellerQuerySnapshot.docs.isNotEmpty) {
         final sellerData = sellerQuerySnapshot.docs.first.data();
         sellerAddress = sellerData['alamat'] ?? 'Address not available';
+        sellerContact = sellerData['kontak'] ?? 'Contact not available';
       } else {
         sellerAddress = 'Seller address not found';
       }
@@ -165,7 +167,8 @@ class _OrderScreenListState extends State<OrderScreenList> {
         title: const Text('Order Details'),
         content: Column(
           children: [
-            Text('Seller Address: $sellerAddress'),
+            Text('Address: $sellerAddress'),
+            Text('Contact: $sellerContact'),
             const SizedBox(height: 8),
             Container(
               height: 250,

@@ -4,7 +4,8 @@ import 'package:intl/intl.dart';
 class ProfileWidget extends StatelessWidget {
   final String? nama;
   final String? username;
-
+  final String? kontak;
+  final String? alamat;
   final String? password;
   final double? saldo;
 
@@ -12,7 +13,8 @@ class ProfileWidget extends StatelessWidget {
   ProfileWidget({
     required this.nama,
     required this.username,
-
+    required this.kontak,
+    required this.alamat,
     required this.password,
     required this.saldo,
   });
@@ -32,7 +34,8 @@ class ProfileWidget extends StatelessWidget {
         children: [
           _buildProfileField('Name', nama),
           _buildProfileField('Username', username),
-
+          _buildProfileField('Contact', kontak),
+          _buildProfileField('Address', alamat),
           _buildProfileField('Password', password),
           _buildProfileField('Balance', formatCurrency(saldo!)),
         ],

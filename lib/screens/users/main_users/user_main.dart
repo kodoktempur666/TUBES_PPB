@@ -96,6 +96,52 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
     );
   }
 
+  Widget _buildPromotionCard(String imagePath, String title, String subtitle) {
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+      ),
+      elevation: 4,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+            child: Image.asset(
+              imagePath,
+              width: double.infinity,
+              height: 150,
+              fit: BoxFit.cover,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 8),
+                Text(
+                  subtitle,
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.grey[600],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return _userData == null
@@ -164,6 +210,26 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                     ],
                   ),
                 ),
+                // Promotion Cards
+                SizedBox(height: 16.0), // Spacing after header
+                _buildPromotionCard(
+                  'assets/images/promo1.png', // Path gambar
+                  'Special Offer',
+                  'Get 50% off for the first purchase!',
+                ),
+                SizedBox(height: 16.0), // Spacing between cards
+                _buildPromotionCard(
+                  'assets/images/promo2.png', // Path gambar
+                  'New Arrival',
+                  'Check out our newest products!',
+                ),
+                SizedBox(height: 16.0),
+                _buildPromotionCard(
+                  'assets/images/promo3.png', // Path gambar
+                  'Easy Payment',
+                  'Pay with ease and convenience!',
+                ),
+                SizedBox(height: 16.0),
               ],
             ),
           );

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../../widgets/user/user_profile.dart';
+import '../../../widgets/seller/seller_profile.dart';
 
 class SellerProfile extends StatefulWidget {
   @override
@@ -90,6 +90,7 @@ class _SellerProfileState extends State<SellerProfile> {
             ProfileWidget(
               nama: _userData?['nama'],
               username: _userData?['username'],
+              alamat: _userData?['alamat'],
               kontak: _userData?['kontak'],
               password: _userData?['password'],
               saldo: _userData?['saldo']?.toDouble(),
