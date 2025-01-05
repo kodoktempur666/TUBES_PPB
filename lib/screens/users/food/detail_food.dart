@@ -34,8 +34,7 @@ class DetailFoodScreen extends StatelessWidget {
             children: [
               // Detail Image widget
               DetailImage(
-                imageUrl:
-                    'https://res.cloudinary.com/dineout/image/upload/v1679050891/production/restaurant/538/restaurant/538-coverImage.png/pl4o28mrontknlw5hgfo.jpg',
+                imageUrl: controller.imageUrl.value,
                 placeholderSvg: 'assets/images/image-placeholder.svg',
                 height: screenHeight * 0.5,
                 gradientHeight: 12.0,

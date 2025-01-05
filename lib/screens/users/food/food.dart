@@ -86,9 +86,9 @@ class FoodScreen extends StatelessWidget {
                       food['harga'].toDouble(),
                       food['seller'],
                       food['stok'],
+                      food['imageUrl'],
                     );
-                    
-                    // Navigate using Get.to() to make it GetX-friendly
+
                     Get.to(() => DetailFoodScreen());
                   },
 
@@ -99,6 +99,7 @@ class FoodScreen extends StatelessWidget {
                     description: food['deskripsi'],
                     cookingTime: food['cookingTime'],
                     stock: food['stok'],
+                    imageUrl: food['imageUrl'],
                   ),
                 );
               },

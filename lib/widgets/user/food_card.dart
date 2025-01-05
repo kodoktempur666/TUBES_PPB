@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:tubes/screens/users/order/order_payment.dart';
 
 class FoodCard extends StatelessWidget {
@@ -12,6 +14,7 @@ class FoodCard extends StatelessWidget {
   final int stock;
   final int cookingTime;
   final String description;
+  final String imageUrl;
 
   const FoodCard({
     required this.cookingTime,
@@ -20,21 +23,19 @@ class FoodCard extends StatelessWidget {
     required this.seller,
     required this.stock,
     required this.description,
+    required this.imageUrl,
   });
 
   String toPascalCaseWithSpaces(String text) {
-    List<String> words = text.split(' '); // Split the string into words
+    List<String> words = text.split(' ');
 
-    // Capitalize the first letter of each word and leave spaces
     for (int i = 0; i < words.length; i++) {
       words[i] = words[i].substring(0, 1).toUpperCase() +
           words[i].substring(1).toLowerCase();
     }
 
-    // Join the words back together with a space in between each word
     return words.join(' ');
   }
-
 
   String formatCurrency(double value) {
     final formatter =
@@ -74,7 +75,7 @@ class FoodCard extends StatelessWidget {
             children: [
               Text('Description: $description'),
               const SizedBox(height: 8),
-              Text('Cooking Time: $cookingTime mins'), // Modify if needed
+              Text('Cooking Time: $cookingTime mins'),
               const SizedBox(height: 8),
               if (sellerDetails.isNotEmpty)
                 Text('Seller Address: ${sellerDetails['alamat']}'),
@@ -102,18 +103,45 @@ class FoodCard extends StatelessWidget {
       ),
       elevation: 3,
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(8.0),
         child: Row(
           children: [
-            // SVG Placeholder image on the left
-            SvgPicture.asset(
-              'assets/images/image-placeholder.svg', // Path to your SVG file
-              width: 80, // Set the size of the placeholder image
-              height: 80,
-              fit: BoxFit.cover,
+            // Image with rounded corners using ClipRRect
+            ClipRRect(
+              borderRadius:
+                  BorderRadius.circular(6), // Set the desired corner radius
+              child: Container(
+                width: 80,
+                height: 160,
+                child: FittedBox(
+                  fit: BoxFit
+                      .cover, // Ensures the image covers the container completely
+                  child: CachedNetworkImage(
+                    imageUrl: imageUrl,
+                    placeholder: (context, url) {
+                      // Skeleton loader while image is loading
+                      return Shimmer.fromColors(
+                        baseColor: Colors.grey[300]!,
+                        highlightColor: Colors.grey[100]!,
+                        child: Container(
+                          color: Colors.grey[300],
+                        ),
+                      );
+                    },
+                    errorWidget: (context, url, error) {
+                      // Fallback SVG image in case of error
+                      return SvgPicture.asset(
+                        'assets/images/image-placeholder.svg',
+                        fit: BoxFit.cover,
+                      );
+                    },
+                  ),
+                ),
+              ),
             ),
+
             const SizedBox(width: 16), // Space between image and text
-            // Column for text content
+
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -121,27 +149,34 @@ class FoodCard extends StatelessWidget {
                   Text(
                     toPascalCaseWithSpaces(name),
                     style: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 16,),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
                   ),
                   const SizedBox(height: 3),
                   Text(
                     formatCurrency(price.toDouble()),
                     style: const TextStyle(
-                        fontSize: 12,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold),
+                      fontSize: 12,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   const SizedBox(height: 2),
                   Text(
                     'Seller: $seller',
                     style: const TextStyle(
-                        fontSize: 12, color: Color.fromARGB(255, 24, 24, 24)),
+                      fontSize: 12,
+                      color: Color.fromARGB(255, 24, 24, 24),
+                    ),
                   ),
                   const SizedBox(height: 8),
                   Text(
                     'Stock: $stock',
                     style: const TextStyle(
-                        fontSize: 12, color: Color.fromARGB(255, 48, 48, 48)),
+                      fontSize: 12,
+                      color: Color.fromARGB(255, 48, 48, 48),
+                    ),
                   ),
                   const SizedBox(height: 16),
                   if (stock == 0)
