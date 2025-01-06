@@ -10,6 +10,7 @@ class AddMenuController {
     required String kategori,
     required int cookingTime,
     required int stok,
+    required String imageUrl,
     required String seller,
   }) async {
     await _firestore.collection('foods').add({
@@ -19,6 +20,7 @@ class AddMenuController {
       'kategori': kategori,
       'cookingTime': cookingTime,
       'stok': stok,
+      'imageUrl': imageUrl,
       'seller': seller,
     });
   }

@@ -64,6 +64,7 @@ class _AddMenuState extends State<AddMenu> {
     required String deskripsi,
     required String kategori,
     required int cookingTime,
+    required String imageUrl,
     required int stok,
   }) async {
     if (_seller == null) {
@@ -81,6 +82,7 @@ class _AddMenuState extends State<AddMenu> {
         kategori: kategori,
         cookingTime: cookingTime,
         stok: stok,
+        imageUrl: imageUrl,
         seller: _seller!,
       );
 

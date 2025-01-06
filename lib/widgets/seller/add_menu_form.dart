@@ -7,6 +7,7 @@ class AddMenuForm extends StatefulWidget {
     required String deskripsi,
     required String kategori,
     required int cookingTime,
+    required String imageUrl,
     required int stok,
   }) onSubmit;
 
@@ -23,6 +24,7 @@ class _AddMenuFormState extends State<AddMenuForm> {
   final TextEditingController _deskripsiController = TextEditingController();
   final TextEditingController _stokController = TextEditingController();
   final TextEditingController _cookingTimeController = TextEditingController();
+  final TextEditingController _imageUrl = TextEditingController();
   String _kategori = 'food'; 
 
   void _submitForm() {
@@ -33,6 +35,7 @@ class _AddMenuFormState extends State<AddMenuForm> {
         deskripsi: _deskripsiController.text,
         kategori: _kategori,
         cookingTime: _cookingTimeController.text.isEmpty ? 0 : int.parse(_cookingTimeController.text),
+        imageUrl: _imageUrl.text,
         stok: int.parse(_stokController.text),
       );
 
