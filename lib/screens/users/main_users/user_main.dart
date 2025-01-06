@@ -184,7 +184,7 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                     runSpacing: 8.0,
                     children: [
                       CategoryItem(
-                        icon: Image.asset('assets/icons/cat_food.png',
+                        icon: Image.asset('assets/icon/cat_food.png',
                             width: 56, height: 56),
                         label: 'Food',
                         onTap: () {
@@ -197,7 +197,7 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                         },
                       ),
                       CategoryItem(
-                        icon: Image.asset('assets/icons/cat_beverage.png',
+                        icon: Image.asset('assets/icon/cat_beverage.png',
                             width: 56, height: 56),
                         label: 'Beverage',
                         onTap: () {
@@ -210,7 +210,7 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                         },
                       ),
                       CategoryItem(
-                        icon: Image.asset('assets/icons/cat_noodle.png',
+                        icon: Image.asset('assets/icon/cat_noodle.png',
                             width: 56, height: 56),
                         label: 'Noodle',
                         onTap: () {
@@ -223,7 +223,7 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                         },
                       ),
                       CategoryItem(
-                        icon: Image.asset('assets/icons/cat_beef.png',
+                        icon: Image.asset('assets/icon/cat_beef.png',
                             width: 56, height: 56),
                         label: 'Beef',
                         onTap: () {

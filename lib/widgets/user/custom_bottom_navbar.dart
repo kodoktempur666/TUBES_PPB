@@ -13,8 +13,8 @@ class CustomBottomNavBar extends StatelessWidget {
             BottomNavigationBarItem(
               icon: SvgPicture.asset(
                 navController.selectedIndex.value == 0
-                    ? 'assets/icons/nav_home_fill.svg'
-                    : 'assets/icons/nav_home_outline.svg',
+                    ? 'assets/icon/nav_home_fill.svg'
+                    : 'assets/icon/nav_home_outline.svg',
                 semanticsLabel: 'Home',
                 height: 25,
                 width: 25,
@@ -24,8 +24,8 @@ class CustomBottomNavBar extends StatelessWidget {
             BottomNavigationBarItem(
               icon: SvgPicture.asset(
                 navController.selectedIndex.value == 1
-                    ? 'assets/icons/nav_order_fill.svg'
-                    : 'assets/icons/nav_order_outline.svg',
+                    ? 'assets/icon/nav_order_fill.svg'
+                    : 'assets/icon/nav_order_outline.svg',
                 semanticsLabel: 'Order',
                 height: 25,
                 width: 25,
@@ -35,8 +35,8 @@ class CustomBottomNavBar extends StatelessWidget {
             BottomNavigationBarItem(
               icon: SvgPicture.asset(
                 navController.selectedIndex.value == 2
-                    ? 'assets/icons/nav_profile_fill.svg'
-                    : 'assets/icons/nav_profile_outline.svg',
+                    ? 'assets/icon/nav_profile_fill.svg'
+                    : 'assets/icon/nav_profile_outline.svg',
                 semanticsLabel: 'Profile',
                 height: 25,
                 width: 25,
